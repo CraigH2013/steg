@@ -20,25 +20,27 @@ program
 let run = true;
 
 if (!program.file) {
-  console.log("Error: --file flag required");
+  console.log("  Error: --file flag required");
   run = false;
 }
 
 if (!program.message) {
   if (!program.signature) {
-    console.log("Error: --signature flag is required if --message is not set");
+    console.log(
+      "  Error: --signature flag is required if --message is not set"
+    );
     run = false;
   }
   if (!program.location) {
-    console.log("Error: --location flag is required if --message is not set");
+    console.log("  Error: --location flag is required if --message is not set");
     run = false;
   }
 } else {
   if (program.signature) {
-    console.log("Warn: --signature flag given even though --message was set");
+    console.log("  Warn: --signature flag given even though --message was set");
   }
   if (program.location) {
-    console.log("Warn: --location flag given even though --message was set");
+    console.log("  Warn: --location flag given even though --message was set");
   }
 }
 
@@ -67,21 +69,21 @@ async function runProgram(fileData) {
     const sigHash = assignment.getSignatureHash();
 
     console.log();
-    console.log("Location Hash: ", locHash);
-    console.log("Signature Hash: ", sigHash);
+    console.log("  Location Hash: ", locHash);
+    console.log("  Signature Hash: ", sigHash);
   } else {
     const assignment = new Assignment(bitMap);
     assignment.assign(program.signature, program.location);
     const message = assignment.interpret();
 
     console.log();
-    console.log("Message: ", message);
+    console.log("  Message: ", message);
   }
 }
 
 if (!run) {
   console.log();
-  console.log("Invalid arguments given. Use --help option");
+  console.log("  Invalid arguments given. Use --help option");
 } else {
   const filePath = path.resolve(program.file);
   const compressedData = fs.readFileSync(filePath);
